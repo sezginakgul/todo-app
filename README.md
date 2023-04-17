@@ -1,5 +1,6 @@
 # todo-app
 
+
 - Uygulama backend ve frontend olmak üzere iki farklı dosya içerisindedir.
 - Repodan çekilen uygulamaları ayağa kaldırmak için öncesinde ilgili paketlerin indirilmesi işlemi yapılması gerekmektedir.
 - Backend'i çalıştırmak için terminal üzerinde `api` klasörü içerisinde öncelikle  `npm install` veya  `npm i` yazılarak gereken paketlerin indirilmesi yapılabilir. İndirme işlemi sonrasında  `npm start` yazarak projeyi çalıştırabilirsiniz.
