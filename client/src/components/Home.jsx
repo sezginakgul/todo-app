@@ -145,21 +145,28 @@ const Home = () => {
           <button type="submit">Add Todo</button>
         </form>
       )}
-      <hr style={{ margin: ".5rem 0 " }} />
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <input
-          type="text"
-          placeholder="Search"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={{ width: "120px", padding: "2px 4px" }}
-        />
-        <BiSortAlt2
-          style={{ fontSize: "22px" }}
-          onClick={() => sortData(todos)}
-        />
-      </div>
-      <hr style={{ margin: ".5rem 0 " }} />
+      {todos.length !== 0 && (
+        <>
+          <hr style={{ margin: ".5rem 0 " }} />
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <input
+              className="search"
+              type="text"
+              placeholder="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{ width: "120px", padding: "2px 4px" }}
+            />
+            <BiSortAlt2
+              className="btn"
+              style={{ fontSize: "22px" }}
+              onClick={() => sortData(todos)}
+            />
+          </div>
+          <hr style={{ margin: ".5rem 0 " }} />
+        </>
+      )}
+
       <ul>
         {todos
           ?.filter(
@@ -171,6 +178,7 @@ const Home = () => {
             <li key={i}>
               <div>
                 <input
+                  className="btn"
                   style={{ margin: "0 .4rem 0 0  " }}
                   type={"checkbox"}
                   defaultChecked={todo.done}
@@ -180,10 +188,11 @@ const Home = () => {
               </div>
               <div>
                 <BiEditAlt
+                  className="btn"
                   style={{ margin: "0 .3rem 0 0 " }}
                   onClick={() => editTask(todo)}
                 />
-                <FaTrash onClick={() => deleteTodo(todo)} />
+                <FaTrash className="btn" onClick={() => deleteTodo(todo)} />
               </div>
             </li>
           ))}

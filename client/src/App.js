@@ -7,7 +7,7 @@ import axios from "axios";
 import Login from "./components/Login";
 import Home from "./components/Home";
 
-function App() {
+const App = () => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -18,11 +18,11 @@ function App() {
       });
   }, []);
 
-  function logout() {
+  const logout = () => {
     axios
       .post("http://localhost:4000/logout", {}, { withCredentials: true })
       .then(() => setEmail(""));
-  }
+  };
 
   return (
     <UserContext.Provider value={{ email, setEmail }}>
@@ -37,6 +37,7 @@ function App() {
           )}
           {email && (
             <a
+              className="btn"
               onClick={(e) => {
                 e.preventDefault();
                 logout();
@@ -56,6 +57,6 @@ function App() {
       </BrowserRouter>
     </UserContext.Provider>
   );
-}
+};
 
 export default App;
