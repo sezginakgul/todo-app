@@ -35,12 +35,9 @@ main {
 form input {
   border: 2px solid #555;
   border-radius: 5px;
-  padding: 2px 4px;
   background: gray;
   color: black;
   padding: 0.5rem;
-  /* border: 0; */
-  /* padding: 0 8px; */
   display: block;
   width: 100%;
   cursor: cell;
@@ -73,4 +70,23 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.edit {
+  border: 2px solid #555;
+  border-radius: 5px;
+  background: gray;
+  color: black;
+  padding: 0.6rem;
+  display: block;
+  width: 100%;
+  cursor: cell;
+}
+
+.edit-btn {
+  background-color: #61dafb;
+  border: 0;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
 }

@@ -118,7 +118,7 @@ app.put("/todos", (req, res) => {
   });
 });
 
-app.post("/todos", async (req, res) => {
+app.post("/todos", (req, res) => {
   // let sampleFile = req.files.document;
   // console.log("file", sampleFile);
   // Dosyayı yükleme işlemini gerçekleştirin

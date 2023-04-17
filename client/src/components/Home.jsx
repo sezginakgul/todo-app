@@ -13,11 +13,11 @@ const Home = () => {
   const [edit, setEdit] = useState(false);
   const [search, setSearch] = useState("");
   const [sortFlag, setSortFlag] = useState(true);
+  const [editedData, setEditedData] = useState([]);
 
   useEffect(() => {
     getTodo();
   }, []);
-  // console.log("file");
   const getTodo = () => {
     axios
       .get("http://localhost:4000/todos", { withCredentials: true })
@@ -44,10 +44,8 @@ const Home = () => {
         setInputVal("");
       });
   };
-  console.log("file", doc);
 
   const updateTodo = (todo) => {
-    console.log("todo", todo);
     const data = { id: todo._id, done: !todo.done };
     axios
       .post("http://localhost:4000/todos", data, { withCredentials: true })
@@ -64,25 +62,35 @@ const Home = () => {
 
   const deleteTodo = async (todo) => {
     const { _id } = todo;
-    axios
-      .delete("http://localhost:4000/todos/" + _id, {
-        withCredentials: true,
-      })
-      .then(() => {
-        const newT = todos.filter((t) => t._id !== todo._id);
-        console.log("newT", newT);
-        setTodos([...newT]);
-      });
+    axios.delete("http://localhost:4000/todos/" + _id, {
+      withCredentials: true,
+    });
+    const newTodos = todos.filter((t) => t._id !== todo._id);
+    setTodos([...newTodos]);
   };
 
   const editTask = (todo) => {
     setEdit(true);
     setInputVal(todo.text);
-    deleteTodo(todo);
+    const newTodos = todos.filter((t) => t._id !== todo._id);
+
+    setEditedData(newTodos);
+    axios.delete("http://localhost:4000/todos/" + todo._id, {
+      withCredentials: true,
+    });
   };
 
   const clickFunc = () => {
     setEdit(false);
+    const formData = new FormData();
+    formData.append("text", inputVal);
+    formData.append("document", doc);
+    axios
+      .put("http://localhost:4000/todos", formData, { withCredentials: true })
+      .then((response) => {
+        setTodos([...editedData, response.data]);
+        setInputVal("");
+      });
   };
 
   const sortData = (data) => {
@@ -98,25 +106,45 @@ const Home = () => {
 
   return (
     <div>
-      <form encType="multipart/form-data" onSubmit={(e) => addTodo(e)}>
-        <input
-          className="text"
-          placeholder={"What do you want to do?"}
-          value={inputVal}
-          onChange={(e) => setInputVal(e.target.value)}
-        />
+      {edit ? (
+        <>
+          <input
+            className="text edit"
+            placeholder={"What do you want to do?"}
+            value={inputVal}
+            onChange={(e) => setInputVal(e.target.value)}
+          />
 
-        <input
-          className="text"
-          type="file"
-          required
-          name="image"
-          onChange={(e) => setDoc(e.target.files[0])}
-        />
-        <button type="submit" onClick={clickFunc}>
-          {edit ? "Edit Todo" : "Add Todo"}
-        </button>
-      </form>
+          <input
+            className="text edit"
+            type="file"
+            required
+            name="image"
+            onChange={(e) => setDoc(e.target.files[0])}
+          />
+          <button className="edit-btn" onClick={clickFunc}>
+            Edit Todo
+          </button>
+        </>
+      ) : (
+        <form encType="multipart/form-data" onSubmit={(e) => addTodo(e)}>
+          <input
+            className="text"
+            placeholder={"What do you want to do?"}
+            value={inputVal}
+            onChange={(e) => setInputVal(e.target.value)}
+          />
+
+          <input
+            className="text"
+            type="file"
+            required
+            name="image"
+            onChange={(e) => setDoc(e.target.files[0])}
+          />
+          <button type="submit">Add Todo</button>
+        </form>
+      )}
       <hr style={{ margin: ".5rem 0 " }} />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <input
@@ -134,12 +162,12 @@ const Home = () => {
       <hr style={{ margin: ".5rem 0 " }} />
       <ul>
         {todos
-          .filter(
+          ?.filter(
             (l) =>
-              l.text.toLowerCase().includes(search.toLowerCase()) ||
+              l?.text?.toLowerCase()?.includes(search?.toLowerCase()) ||
               search === ""
           )
-          .map((todo, i) => (
+          ?.map((todo, i) => (
             <li key={i}>
               <div>
                 <input
