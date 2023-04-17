@@ -21,3 +21,4 @@
 - Proje içerisinde `logout` butonuna tıklanması halinde geçerli oturum kapatma işlemi gerçekleştirilebilir.
 - NOT: Todolar üzerinden yapılan create, update, put ve delete işlemleri direkt olarak database kayıt edilmektedir.
 - NOT: Kullanıcı login, logout, register işlemleri direkt olarak database kayıt edilmektedir.
+- NOT: Backend işlemlerinde database olarak `mongo.db`, kullanıcı login register işlemlerinde `json-web-token` kullanılmıştır. Login veya register işlemi yapan kullanıcı için geri dönen token bilgisi `cookie-parser` paketi ile cookie üzerinde kayıt edilmektedir. Kullanıcı logout işlemi yaptığında ise cookie'e kayıtlı token bilgisi de silinmektedir. Kullanıcı login veya register işlemi yaptığında girilmesi istenen şifre bilgileri `bcrypt` paketi ile database hashlenerek kayıt edilmektedir.
