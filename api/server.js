@@ -69,7 +69,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  console.log("login");
+  // console.log("login");
   const { email, password } = req.body;
   User.findOne({ email }).then((userInfo) => {
     if (!userInfo) {
